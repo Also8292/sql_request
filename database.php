@@ -31,7 +31,6 @@ function select_request($query) {
 }
 
 
-
 /**
  * insert function
  * @param string insert request

@@ -133,7 +133,20 @@ $request2->closeCursor();
 <br>
 <?php
 
+$query1 = "SELECT first_name, last_name, birth_date FROM table_1";
+$request = select_request($query1);
+$i = 1;
+while($resultat = $request->fetch()) {
+    $date = new DateTime($resultat['birth_date']);
+    $now = new DateTime();
+    $interval = $now->diff($date);
+    $age = $interval->y;
 
+    echo $i . ' : ' . $resultat['first_name'] . ' ' . $resultat['last_name'] . ', ' . $age . ' ans.<br>';
+
+    $i++;
+}
+$request->closeCursor();
 
 ?>
 <br>
