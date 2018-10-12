@@ -133,9 +133,11 @@ $request2->closeCursor();
 <br>
 <?php
 
-$query1 = "SELECT first_name, last_name, birth_date FROM table_1";
+$query1 = 'SELECT first_name, last_name, birth_date, gender FROM table_1';
 $request = select_request($query1);
 $i = 1;
+$age_homme = array();
+$age_femme = array();
 while($resultat = $request->fetch()) {
     $date = new DateTime($resultat['birth_date']);
     $now = new DateTime();
@@ -145,8 +147,18 @@ while($resultat = $request->fetch()) {
     echo $i . ' : ' . $resultat['first_name'] . ' ' . $resultat['last_name'] . ', ' . $age . ' ans.<br>';
 
     $i++;
+    if($resultat['gender'] == 'Male') {
+        array_push($age_homme, $age);
+    }
+    else if($resultat['gender'] == 'Female') {
+        array_push($age_femme, $age);
+    }
 }
 $request->closeCursor();
+$moyenne_homme = array_sum($age_homme)/count($age_homme);
+$moyenne_femme = array_sum($age_femme)/count($age_femme);
+echo 'La moyenne d\'age des hommes : ' . round($moyenne_homme) . ' ans <br>';
+echo 'La moyenne d\'age des femmes : ' . round($moyenne_femme) . ' ans <br>';
 
 ?>
 <br>
